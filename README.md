@@ -1,5 +1,5 @@
 # dblp_spider
-dblp爬虫。
+dblp会议/期刊爬虫。
 ### 文件目录
 ```bash
 USE_Selenium
