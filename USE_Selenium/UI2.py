@@ -46,9 +46,22 @@ class ScraperThread(QThread):
 
             for driver in self.engine.getPage():
                 wait = WebDriverWait(driver, 10)
+                # #journals\/pvldb\/0001S23 > nav > ul > li:nth-child(2) > div.head > a > img
+                # /html/body/div[3]/ul
+                # /li[1]/ ==
+                # nav/ul/li[2]/div[1]/a
                 uls = wait.until(EC.presence_of_all_elements_located((By.XPATH, "/html/body/div[3]/ul[@class='publ-list']")))
                 for ul in uls:
-                    entries = wait.until(lambda d: ul.find_elements(By.CSS_SELECTOR, ".entry.inproceedings"))
+                    if 'conf' in driver.current_url:
+                        entries = wait.until(lambda d: ul.find_elements(By.CSS_SELECTOR, ".entry.inproceedings"))
+                    elif 'journals' in driver.current_url:
+                        entries = wait.until(lambda d: ul.find_elements(By.CSS_SELECTOR, ".entry.article"))
+                    elif 'books' in driver.current_url:
+                        entries = wait.until(lambda d: ul.find_elements(By.CSS_SELECTOR, ".entry.incollection"))
+                    elif 'series' in driver.current_url:
+                        entries = wait.until(lambda d: ul.find_elements(By.CSS_SELECTOR, ".entry.inproceedings"))
+                    else:
+                        entries = wait.until(lambda d: ul.find_elements(By.CSS_SELECTOR, ".entry"))
                     for entry in entries:
                         links = wait.until(lambda d: entry.find_elements(By.XPATH, ".//nav/ul/li[2]/div[1]/a"))
                         titles = wait.until(lambda d: entry.find_elements(By.CSS_SELECTOR, ".title"))
@@ -85,13 +98,13 @@ class WebScraperApp(QWidget):
         layout = QVBoxLayout()
 
         # 网址输入框
-        self.url_label = QLabel("请输入爬取的网址：")
+        self.url_label = QLabel("请输入爬取的网址（dblp期刊会议网址）：")
         layout.addWidget(self.url_label)
         self.url_input = QLineEdit()
         layout.addWidget(self.url_input)
 
         # 会议名称输入框
-        self.conference_label = QLabel("请输入会议名称：")
+        self.conference_label = QLabel("请输入会议期刊名称（icml、vldb、sigmod）：")
         layout.addWidget(self.conference_label)
         self.conference_input = QLineEdit()
         layout.addWidget(self.conference_input)
@@ -103,13 +116,13 @@ class WebScraperApp(QWidget):
         layout.addWidget(self.year_input)
 
         # 过滤关键词输入框
-        self.filter_label = QLabel("请输入过滤关键词（空格分隔）：")
+        self.filter_label = QLabel("请输入过滤关键词（空格分隔，小写）：")
         layout.addWidget(self.filter_label)
         self.filter_input = QLineEdit()
         layout.addWidget(self.filter_input)
 
         # 浏览器选择框
-        self.browser_label = QLabel("选择浏览器：")
+        self.browser_label = QLabel("选择浏览器（默认Chrome，可选Edge）：")
         layout.addWidget(self.browser_label)
         self.browser_select = QComboBox()
         self.browser_select.addItems(["Chrome", "Edge"])
