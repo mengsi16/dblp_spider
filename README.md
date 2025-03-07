@@ -15,8 +15,11 @@ USE_Selenium
 └─ UI2.py
 ```
 爬虫核心逻辑在Selenium_Get_DBLP.py以及engine.py（这里可以自己随意DIY）
+
 可以使用UI2.py打开一个简易的UI爬虫界面。
+
 get_reference.py 可以快速筛选引用量达标的论文出来。~~（还没有做UI界面）~~
+
 get_reference_UI.py是get_reference.py的pyqt5前端UI界面
 
 ## 运行UI2.py
