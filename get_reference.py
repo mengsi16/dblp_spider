@@ -7,8 +7,17 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 from engine import engine
 
+
+source_path = input("指定目录路径：")
 # 指定目录路径
-directory_path = r'B:\study\研究生\研讨厅演武堂\研讨厅\待阅读论文\VLDB SUBGRAPH 2024'
+directory_path = rf'{source_path}'
+
+target_path = input("指定目标文件夹路径：")
+# 指定目标文件夹路径
+# new_path = rf'B:\study\研究生\研讨厅演武堂\研讨厅\待阅读论文\VLDB SUBGRAPH 2024 Read'
+new_path = rf'{target_path}'
+
+Target_Reference = int(input())
 
 # 初始化一个空列表来存储文件名
 filenames = []
@@ -30,9 +39,6 @@ pattern_urls = [f"https://scholar.google.com.hk/scholar?hl=zh-CN&q={filename.rep
 
 # 初始化 Selenium Engine
 Engine = engine('Chrome', pattern_urls)
-
-# 指定目标文件夹路径
-new_path = r'B:\study\研究生\研讨厅演武堂\研讨厅\待阅读论文\VLDB SUBGRAPH 2024 Read'
 
 # 如果目标文件夹不存在，则创建它
 if not os.path.exists(new_path):
@@ -62,7 +68,7 @@ for i, driver in enumerate(Engine.getPage()):
             print(f"无法解析引用次数: {reference_text}，跳过文件 {filename}")
             continue
 
-        if reference < 20:
+        if reference < Target_Reference:
             print(f"{filename.replace('.bib', '')} 被引用次数 < 20，没有阅读价值")
         else:
             bibFilename = f"{os.path.splitext(filename)[0]}.bib"
