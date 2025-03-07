@@ -20,9 +20,9 @@ get_reference.py 可以快速筛选引用量达标的论文出来。~~（还没�
 get_reference_UI.py是get_reference.py的pyqt5前端UI界面
 
 ## 运行UI2.py
-![image](https://github.com/user-attachments/assets/f32ab61d-f458-4bf3-b6fd-14d890365c8c)
+<p align="center"><img src="https://github.com/user-attachments/assets/f32ab61d-f458-4bf3-b6fd-14d890365c8c" alt="描述文字" width="500"></p>
 
 ## 运行get_reference_UI.py
-![image](https://github.com/user-attachments/assets/133ab7c9-74d3-4167-a1a8-31550f8f806a)
+<p align="center"><img src="https://github.com/user-attachments/assets/133ab7c9-74d3-4167-a1a8-31550f8f806a" alt="描述文字" width="500"></p>
 
 非常简陋。
